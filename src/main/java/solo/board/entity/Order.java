@@ -6,12 +6,14 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.FetchType.*;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Order extends Timestamp {
     @Id
     @GeneratedValue
@@ -23,10 +25,30 @@ public class Order extends Timestamp {
     private Member member;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = LAZY)
+    @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
-    // @OneToMany(cascade = CascadeType.ALL, mappedBy = "order")
-    // private List<OrderItem> orderItemList;
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItemList = new ArrayList<>();
 
-    // Delivery, Item 객체가 만들어진 후 생성자 함수 제작
+    public void addOrderItem(OrderItem orderItem) {
+        orderItemList.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+        Order order = new Order();
+        order.update(member, delivery, orderItems);
+        return order;
+    }
+
+    public void update(Member member, Delivery delivery, OrderItem[] orderItems) {
+        this.member = member;
+        this.delivery = delivery;
+        delivery.setOrder(this);
+        this.status = OrderStatus.ORDER;
+        for (OrderItem orderItem : orderItems) {
+            addOrderItem(orderItem);
+        }
+    }
 }

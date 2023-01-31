@@ -18,6 +18,9 @@ public class Item {
     private int price;
     private int stock_quantity;
 
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    private List<OrderItem> orderItemList;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;

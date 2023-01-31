@@ -19,8 +19,8 @@ public class Member {
 
     private Address address;
 
-    // @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    // private List<Order> orderList;
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Order> orderList;
 
     public static Member createMember(String email, String password, String nickName, String city, String street, String zipcode){
         Member member = new Member();

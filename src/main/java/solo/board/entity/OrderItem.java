@@ -27,8 +27,12 @@ public class OrderItem {
         return orderItem;
     }
 
-    private void update(Item item, int count) {
+    public void update(Item item, int count) {
         this.item = item;
         this.count = count;
+    }
+
+    public void setOrder(Order order){
+        this.order = order;
     }
 }
