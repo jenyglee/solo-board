@@ -3,9 +3,12 @@ package solo.board.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import solo.board.entity.member.Seller;
 
 import javax.persistence.*;
 import java.util.List;
+
+import static javax.persistence.FetchType.*;
 
 @Entity
 @Getter
@@ -17,11 +20,14 @@ public class Item {
     private String name;
     private int price;
     private int stock_quantity;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "seller_id")
+    private Seller seller;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<OrderItem> orderItemList;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
 

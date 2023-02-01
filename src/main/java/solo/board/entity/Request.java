@@ -2,6 +2,7 @@ package solo.board.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import solo.board.entity.member.Member;
 
 import javax.persistence.*;
 
