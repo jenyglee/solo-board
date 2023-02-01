@@ -2,7 +2,7 @@ package solo.board.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import solo.board.entity.member.Member;
+import solo.board.entity.Member;
 import solo.board.entity.MemberRole;
 import solo.board.entity.Request;
 import solo.board.repository.MemberRepository;
@@ -40,13 +40,13 @@ public class MemberService {
         }
 
         // 요청한 멤버를 찾는다.
-        Long memberId = request.get().getMember().getId();
-        Optional<Member> requestedMember = memberRepository.findById(memberId);
-        if(requestedMember.isEmpty()){
-            throw new IllegalArgumentException("요청한 유저를 찾을 수 없습니다.");
-        }
+        // Long memberId = request.get().getMember().getId();
+        // Optional<Member> requestedMember = memberRepository.findById(memberId);
+        // if(requestedMember.isEmpty()){
+        //     throw new IllegalArgumentException("요청한 유저를 찾을 수 없습니다.");
+        // }
 
-        Member member = requestedMember.get();
+        // Member member = requestedMember.get();
         // 커스토머 디비를 삭제
         // memberRepository.delete(); // << 커스토머 삭제되는지
         // // 셀러에 인서트

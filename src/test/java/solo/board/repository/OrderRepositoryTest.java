@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import solo.board.entity.*;
-import solo.board.entity.member.Member;
+import solo.board.entity.Member;
 
 import javax.persistence.EntityManager;
 

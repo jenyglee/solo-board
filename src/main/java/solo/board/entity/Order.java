@@ -2,14 +2,12 @@ package solo.board.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import solo.board.entity.member.Member;
-// import solo.board.entity.member.Member;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javax.persistence.FetchType.*;
+import static javax.persistence.FetchType.LAZY;
 
 @Entity(name = "orders")
 @Getter

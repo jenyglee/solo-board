@@ -3,12 +3,10 @@ package solo.board.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import solo.board.entity.member.Seller;
-
 import javax.persistence.*;
 import java.util.List;
 
-import static javax.persistence.FetchType.*;
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -21,8 +19,8 @@ public class Item {
     private int price;
     private int stock_quantity;
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "seller_id")
-    private Seller seller;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<OrderItem> orderItemList;
