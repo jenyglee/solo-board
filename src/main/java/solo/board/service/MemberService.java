@@ -8,6 +8,7 @@ import solo.board.entity.Request;
 import solo.board.repository.MemberRepository;
 import solo.board.repository.RequestRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,16 +23,18 @@ public class MemberService {
         return member;
     }
 
-
-    public Request createRequest(MemberRole role, Long memberid){
-        Optional<Member> optionalMember = memberRepository.findById(memberid);
-        if(optionalMember.isEmpty()){
-            throw new IllegalArgumentException("계정을 찾을 수 없습니다.");
-        }
-        Request request = new Request(role, optionalMember.get());
-        requestRepository.save(request);
-        return request;
+    public Member createAdmin(String email, String password, String nickName, String city, String street, String zipcode){
+        Member member = Member.createMember(email, password, nickName, city, street, zipcode);
+        member.setRole(MemberRole.ADMIN);
+        memberRepository.save(member);
+        return member;
     }
+
+
+    public List<Member> searchMember(String email){
+        return memberRepository.search(email);
+    }
+
 
 
     public void approveRequest(Long adminId, Long requestId) {
@@ -48,20 +51,13 @@ public class MemberService {
         }
 
         // 요청한 멤버를 찾는다.
-        // Long memberId = request.get().getMember().getId();
-        // Optional<Member> requestedMember = memberRepository.findById(memberId);
-        // if(requestedMember.isEmpty()){
-        //     throw new IllegalArgumentException("요청한 유저를 찾을 수 없습니다.");
-        // }
+        Long memberId = request.get().getMember().getId();
+        Optional<Member> requestedMember = memberRepository.findById(memberId);
+        if(requestedMember.isEmpty()){
+            throw new IllegalArgumentException("요청한 유저를 찾을 수 없습니다.");
+        }
 
-        // Member member = requestedMember.get();
-        // 커스토머 디비를 삭제
-        // memberRepository.delete(); // << 커스토머 삭제되는지
-        // // 셀러에 인서트
-        // memberRepository.save(); // << 셀러로 가지는지
-
-        // requestRepository.deleteById(requestId);
-        // MemberRole role = requestedMember.get().getRole();
-        // role = MemberRole.SELLER;
+        requestedMember.get().setRole(request.get().getRole());
+        requestRepository.deleteById(requestId);
     }
 }
