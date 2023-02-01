@@ -5,11 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+import solo.board.entity.MemberRole;
+import solo.board.entity.Request;
 import solo.board.entity.member.Admin;
 import solo.board.entity.member.Customer;
 import solo.board.entity.member.Member;
-import solo.board.entity.MemberRole;
-import solo.board.entity.Request;
 import solo.board.entity.member.Seller;
 import solo.board.service.MemberService;
 

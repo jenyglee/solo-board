@@ -47,6 +47,10 @@ public class MemberService {
         }
 
         Member member = requestedMember.get();
+        // 커스토머 디비를 삭제
+        // memberRepository.delete(); // << 커스토머 삭제되는지
+        // // 셀러에 인서트
+        // memberRepository.save(); // << 셀러로 가지는지
 
         // requestRepository.deleteById(requestId);
         // MemberRole role = requestedMember.get().getRole();

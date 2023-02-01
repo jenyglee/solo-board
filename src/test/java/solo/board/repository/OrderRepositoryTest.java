@@ -17,8 +17,8 @@ import javax.persistence.EntityManager;
 class OrderRepositoryTest {
     @Autowired
     EntityManager em;
-    @Autowired
-    MemberRepository memberRepository;
+    // @Autowired
+    // MemberRepository memberRepository;
     @Autowired
     ItemRepository itemRepository;
     @Autowired
