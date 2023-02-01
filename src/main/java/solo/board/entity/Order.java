@@ -11,7 +11,7 @@ import java.util.List;
 
 import static javax.persistence.FetchType.*;
 
-@Entity
+@Entity(name = "orders")
 @Getter
 @NoArgsConstructor
 public class Order extends Timestamp {
