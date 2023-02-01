@@ -18,7 +18,7 @@ public class Item {
     private Long id;
     private String name;
     private int price;
-    private int stock_quantity;
+    private int stockQuantity;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
@@ -27,10 +27,10 @@ public class Item {
     private List<OrderItem> orderItemList = new ArrayList<>();
 
 
-    public Item(String name, int price, int stock_quantity, Member member) {
+    public Item(String name, int price, int stockQuantity, Member member) {
         this.name = name;
         this.price = price;
-        this.stock_quantity = stock_quantity;
+        this.stockQuantity = stockQuantity;
         this.member = member;
         // member.addItemList(this);
     }
@@ -42,5 +42,11 @@ public class Item {
 
     public void addOrderItem(OrderItem orderItem){
         this.orderItemList.add(orderItem);
+    }
+
+    public void update(String name, int price, int stockQuantity) {
+        this.name = name;
+        this.price = price;
+        this.stockQuantity = stockQuantity;
     }
 }
