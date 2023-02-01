@@ -1,20 +1,19 @@
-package solo.board.repository;
+package solo.board.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import solo.board.entity.Member;
 import solo.board.entity.MemberRole;
 import solo.board.entity.Request;
-import solo.board.service.MemberService;
-import solo.board.service.RequestService;
+import solo.board.repository.MemberRepository;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@Rollback(false)
-class MemberRepositoryTest {
+class MemberServiceTest {
     @Autowired
     MemberRepository memberRepository;
     @Autowired
@@ -50,6 +49,4 @@ class MemberRepositoryTest {
         // 어드민 - 승인
         memberService.approveRequest(admin.getId(), request.getId());
     }
-
-
 }

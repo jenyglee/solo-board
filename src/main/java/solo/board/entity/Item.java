@@ -49,4 +49,12 @@ public class Item {
         this.price = price;
         this.stockQuantity = stockQuantity;
     }
+
+    public void removeQuantity(int count) {
+        int leftQuantity = this.stockQuantity - count;
+        if(leftQuantity < 0){
+            throw new IllegalArgumentException("구매 수량이 재고보다 많습니다.");
+        }
+        this.stockQuantity = leftQuantity;
+    }
 }

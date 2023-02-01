@@ -48,6 +48,8 @@ public class Order extends Timestamp {
         delivery.setOrder(this);
         for (OrderItem orderItem : orderItems) {
             this.addOrderItem(orderItem);
+            Item item = orderItem.getItem();
+            item.removeQuantity(orderItem.getCount());
         }
         this.status = OrderStatus.ORDER;
     }

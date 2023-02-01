@@ -30,13 +30,17 @@ public class MemberService {
         return member;
     }
 
-
     public List<Member> searchMember(String email){
         return memberRepository.search(email);
     }
 
 
+    //✨모든 판매자 조회
+    //✨모든 고객 조회
+    //✨요청 조회
 
+
+    //요청 승인
     public void approveRequest(Long adminId, Long requestId) {
         // 어드민을 찾는다.
         Optional<Member> admin = memberRepository.findById(adminId);
@@ -60,4 +64,6 @@ public class MemberService {
         requestedMember.get().setRole(request.get().getRole());
         requestRepository.deleteById(requestId);
     }
+
+    //✨요청 삭제
 }
