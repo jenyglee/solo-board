@@ -12,6 +12,7 @@ public class Delivery {
     @Id
     @GeneratedValue
     private Long id;
+    @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
 
     @Embedded

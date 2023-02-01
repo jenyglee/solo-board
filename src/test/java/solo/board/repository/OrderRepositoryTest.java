@@ -7,6 +7,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import solo.board.entity.*;
 import solo.board.entity.Member;
+import solo.board.service.*;
 
 import javax.persistence.EntityManager;
 
@@ -17,32 +18,35 @@ import javax.persistence.EntityManager;
 class OrderRepositoryTest {
     @Autowired
     EntityManager em;
-    // @Autowired
-    // MemberRepository memberRepository;
     @Autowired
-    ItemRepository itemRepository;
+    ItemService itemService;
     @Autowired
-    OrderItemRepository orderItemRepository;
+    MemberService memberService;
     @Autowired
-    OrderRepository orderRepository;
+    OrderItemService orderItemService;
     @Autowired
-    DeliveryRepository deliveryRepository;
+    DeliveryService deliveryService;
+    @Autowired
+    OrderService orderService;
 
     @Test
     public void 주문(){
-        // Member member = memberRepository.save(Member.createMember("member1", "1111", "", "부천시", "원미로", "232번길"));
-        //
-        // Item item1 = itemRepository.save(Item.createItem("딸기", 3000, 1000));
-        // Item item2 = itemRepository.save(Item.createItem("계란", 5000, 1000));
-        // Item item3 = itemRepository.save(Item.createItem("감자", 500, 1000));
-        //
-        // OrderItem orderItem1 = orderItemRepository.save(OrderItem.createOrderItem(item1, 21));
-        // OrderItem orderItem2 = orderItemRepository.save(OrderItem.createOrderItem(item2, 11));
-        // OrderItem orderItem3 = orderItemRepository.save(OrderItem.createOrderItem(item3, 8));
-        //
-        // Delivery delivery = deliveryRepository.save(Delivery.createDelivery(member.getAddress()));
-        // Order order = Order.createOrder(member, delivery, orderItem1, orderItem2, orderItem3);
-        // orderRepository.save(order);
+        Member seller = memberService.createMember("seller@aaa.aaa", "1234", "판매자", "부천시", "원미로", "232번길");
+        seller.setRole(MemberRole.SELLER);
+        Member customer = memberService.createMember("customer@aaa.aaa", "1234", "구매자", "부천시", "원미로", "232번길");
+
+        Item item1 = itemService.createItem("딸기", 3000, 1000, seller);
+        Item item2 = itemService.createItem("계란", 5000, 1000, seller);
+        Item item3 = itemService.createItem("감자", 500, 1000, seller);
+
+        OrderItem orderItem1 = orderItemService.createOrderItem(item1, 21);
+        OrderItem orderItem2 = orderItemService.createOrderItem(item2, 11);
+        OrderItem orderItem3 = orderItemService.createOrderItem(item3, 8);
+
+
+        Delivery delivery = deliveryService.createDelivery(customer.getAddress());
+
+        orderService.createOrder(customer, delivery, orderItem1, orderItem2, orderItem3);
     }
 
 }

@@ -15,6 +15,14 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final RequestRepository requestRepository;
+
+    public Member createMember(String email, String password, String nickName, String city, String street, String zipcode){
+        Member member = Member.createMember(email, password, nickName, city, street, zipcode);
+        memberRepository.save(member);
+        return member;
+    }
+
+
     public Request createRequest(MemberRole role, Long memberid){
         Optional<Member> optionalMember = memberRepository.findById(memberid);
         if(optionalMember.isEmpty()){

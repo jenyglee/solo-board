@@ -1,11 +1,14 @@
 package solo.board.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+
 @Entity
 @Getter
+@NoArgsConstructor
 public class OrderItem {
     @Id
     @GeneratedValue
@@ -22,13 +25,13 @@ public class OrderItem {
     private int count;
 
     public static OrderItem createOrderItem(Item item, int count) {
-        OrderItem orderItem = new OrderItem();
-        orderItem.update(item, count);
+        OrderItem orderItem = new OrderItem(item, count);
         return orderItem;
     }
 
-    public void update(Item item, int count) {
+    public OrderItem(Item item, int count) {
         this.item = item;
+        item.addOrderItem(this);
         this.count = count;
     }
 

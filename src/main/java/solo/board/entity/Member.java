@@ -1,15 +1,18 @@
 package solo.board.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import solo.board.entity.Address;
 import solo.board.entity.MemberRole;
 import solo.board.entity.Order;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Member {
     @Id
     @GeneratedValue
@@ -18,24 +21,36 @@ public class Member {
     private String password; // 비밀번호
     private String nickName; // 이름
     private Address address; // 배송지 주소
-
     @Enumerated(EnumType.STRING)
-    private MemberRole role;
+    private MemberRole role; // 권한
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Order> orderList; // 주문 리스트
+    private List<Order> orderList = new ArrayList<>(); // 주문 리스트
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Item> itemList = new ArrayList<>(); // 등록한 상품 리스트
 
 
-    public Member() {
+    public static Member createMember(String email, String password, String nickName, String city, String street, String zipcode){
+        Address address = new Address(city, street, zipcode);
+        return new Member(email, password, nickName, address);
     }
 
-    public Member(String email, String password, String nickName, String city, String street, String zipcode) {
+
+    public Member(String email, String password, String nickName, Address address) {
         this.email = email;
         this.password = password;
         this.nickName = nickName;
-        Address address = new Address(city, street, zipcode);
         this.address = address;
         this.role = MemberRole.CUSTOMER;
+    }
+
+    public void addOrderList(Order order){
+        this.orderList.add(order);
+    }
+
+    public void addItemList(Item item){
+        this.itemList.add(item);
     }
 
     // public void changeAdmin(){
@@ -58,7 +73,7 @@ public class Member {
     //     }
     // }
 
-    // public void setRole(MemberRole role) {
-    //     this.role = role;
-    // }
+    public void setRole(MemberRole role) {
+        this.role = role;
+    }
 }

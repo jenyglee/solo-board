@@ -16,6 +16,8 @@ public class Order extends Timestamp {
     @Id
     @GeneratedValue
     private Long id;
+
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     @ManyToOne(fetch = LAZY)
@@ -34,19 +36,20 @@ public class Order extends Timestamp {
         orderItem.setOrder(this);
     }
 
-    // public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
-    //     Order order = new Order();
-    //     order.update(member, delivery, orderItems);
-    //     return order;
-    // }
-    //
-    // public void update(Member member, Delivery delivery, OrderItem[] orderItems) {
-    //     this.member = member;
-    //     this.delivery = delivery;
-    //     delivery.setOrder(this);
-    //     this.status = OrderStatus.ORDER;
-    //     for (OrderItem orderItem : orderItems) {
-    //         addOrderItem(orderItem);
-    //     }
-    // }
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+        Order order = new Order(member, delivery, orderItems);
+        return order;
+    }
+
+    public Order(Member member, Delivery delivery, OrderItem... orderItems) {
+        this.member = member;
+        member.addOrderList(this);
+        this.delivery = delivery;
+        delivery.setOrder(this);
+        for (OrderItem orderItem : orderItems) {
+            this.addOrderItem(orderItem);
+        }
+        this.status = OrderStatus.ORDER;
+    }
+
 }

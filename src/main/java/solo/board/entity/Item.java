@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
@@ -23,21 +24,23 @@ public class Item {
     private Member member;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
-    private List<OrderItem> orderItemList;
+    private List<OrderItem> orderItemList = new ArrayList<>();
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "category_id")
-    private Category category;
 
-    public static Item createItem(String name, int price, int stock_quantity){
-        Item item = new Item();
-        item.update(name, price, stock_quantity);
-        return item;
-    }
-
-    public void update(String name, int price, int stock_quantity){
+    public Item(String name, int price, int stock_quantity, Member member) {
         this.name = name;
         this.price = price;
         this.stock_quantity = stock_quantity;
+        this.member = member;
+        // member.addItemList(this);
+    }
+
+    public static Item createItem(String name, int price, int stock_quantity, Member member){
+        Item item = new Item(name, price, stock_quantity, member);
+        return item;
+    }
+
+    public void addOrderItem(OrderItem orderItem){
+        this.orderItemList.add(orderItem);
     }
 }
