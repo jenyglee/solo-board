@@ -10,7 +10,8 @@ import solo.board.dto.ItemResponseDto;
 import solo.board.dto.PageResponseDto;
 import solo.board.entity.Item;
 import solo.board.entity.Member;
-import solo.board.exception.ItemException;
+import solo.board.exception.NotFoundException;
+import solo.board.exception.api.Status;
 import solo.board.repository.ItemRepository;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class ItemService {
     public void editItem(Long memberId, Long itemId, ItemRequestDto requestDto){
         // 1. 나의 상품인지 확인
         Item item = itemRepository.findByIdAndMember_Id(itemId, memberId).orElseThrow(
-                () -> new IllegalArgumentException("상품을 찾을 수 없습니다.")
+                ()-> new NotFoundException(Status.NOT_FOUND_ITEM)
         );
 
         // 2. 상품 수정
@@ -60,7 +61,7 @@ public class ItemService {
     public void removeItem(Long memberId, Long itemId){
         // 1. 나의 상품인지 확인
         Item item = itemRepository.findByIdAndMember_Id(itemId, memberId).orElseThrow(
-                () -> new IllegalArgumentException("상품을 찾을 수 없습니다.")
+                ()-> new NotFoundException(Status.NOT_FOUND_ITEM)
         );
 
         // 2. 상품 삭제

@@ -56,7 +56,7 @@ class ItemServiceTest {
         itemService.createItem("감자", 500, 1000, sellerB);
 
         //when
-        PageResponseDto<List<ItemResponseDto>> itemList = itemService.getItemList(sellerA.getId(), 2, 2);
+        PageResponseDto<List<ItemResponseDto>> itemList = itemService.getItemList(sellerA.getId(), 0, 2);
 
         //then
         assertThat(itemList.getData().get(0).getName()).isEqualTo("딸기");
@@ -78,7 +78,6 @@ class ItemServiceTest {
         assertThat(item1.getName()).isEqualTo("딸기2");
         assertThat(item1.getPrice()).isEqualTo(4000);
         assertThat(item1.getStockQuantity()).isEqualTo(2000);
-
     }
 
     @Test

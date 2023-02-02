@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import solo.board.entity.Item;
 import solo.board.entity.OrderItem;
+import solo.board.entity.OrderStatus;
 import solo.board.repository.OrderItemRepository;
 
 @Service
